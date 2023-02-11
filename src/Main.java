@@ -17,7 +17,7 @@ public class Main {
         list.add("D://Games//savegames//save.dat");
         list.add("D://Games//savegames//save1.dat");
         list.add("D://Games//savegames//save2.dat");
-        zipFiles("D://Games//savegames//zip.zip",list);
+        zipFiles("D://Games//savegames//zip.zip", list);
         File game1Dat = new File("D://Games//savegames//save.dat.dat");
         File game2Dat = new File("D://Games//savegames//save1.dat");
         File game3Dat = new File("D://Games//savegames//save2.dat");
@@ -36,23 +36,22 @@ public class Main {
 
     }
 
-    public static void zipFiles(String adress, ArrayList<String> list) {
-        for (int i = 0; i < list.size(); i++) {
-            String s = list.get(i);
-            try (ZipOutputStream zout = new ZipOutputStream(new FileOutputStream("zip_output.zip"));
-                 FileInputStream fis = new FileInputStream(s)) {
-                ZipEntry entry = new ZipEntry("packed_notes.txt");
-                zout.putNextEntry(entry);
-                byte[] buffer = new byte[fis.available()];
-                fis.read(buffer);
-                zout.write(buffer);
-                zout.closeEntry();
-
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+    public static void zipFiles(String path, ArrayList<String> arrayList) {
+        try (ZipOutputStream zout = new ZipOutputStream(new FileOutputStream(path))) {
+            for (String arr : arrayList) {
+                try (FileInputStream fis = new FileInputStream(arr)) {
+                    ZipEntry entry = new ZipEntry(arr);
+                    zout.putNextEntry(entry);
+                    while (fis.available() > 0) {
+                        zout.write(fis.read());
+                    }
+                    zout.closeEntry();
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
             }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
     }
-}
+    }
