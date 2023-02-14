@@ -18,7 +18,7 @@ public class Main {
         list.add("D://Games//savegames//save1.dat");
         list.add("D://Games//savegames//save2.dat");
         zipFiles("D://Games//savegames//zip.zip", list);
-        File game1Dat = new File("D://Games//savegames//save.dat.dat");
+        File game1Dat = new File("D://Games//savegames//save.dat");
         File game2Dat = new File("D://Games//savegames//save1.dat");
         File game3Dat = new File("D://Games//savegames//save2.dat");
         if (game1Dat.delete()) System.out.println("Файл \"save.dat\" удален");
@@ -36,7 +36,7 @@ public class Main {
 
     }
 
-    public static void zipFiles(String path, ArrayList<String> arrayList) {
+    private static void zipFiles(String path, ArrayList<String> arrayList) {
         try (ZipOutputStream zout = new ZipOutputStream(new FileOutputStream(path))) {
             for (String arr : arrayList) {
                 try (FileInputStream fis = new FileInputStream(arr)) {
@@ -54,4 +54,4 @@ public class Main {
             System.out.println(ex.getMessage());
         }
     }
-    }
+}
