@@ -39,7 +39,8 @@ public class Main {
         try (ZipOutputStream zout = new ZipOutputStream(new FileOutputStream(path))) {
             for (String arr : arrayList) {
                 try (FileInputStream fis = new FileInputStream(arr)) {
-                    ZipEntry entry = new ZipEntry(arr);
+                    File saveFile = new File(arr);
+                    ZipEntry entry = new ZipEntry(saveFile.getName());
                     zout.putNextEntry(entry);
                     while (fis.available() > 0) {
                         zout.write(fis.read());
